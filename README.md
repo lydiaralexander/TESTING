@@ -6,9 +6,27 @@ Dashboard Presentation: https://docs.google.com/presentation/d/1hXU28unDzPH3O0gM
 
 ## Collaborators 
 
-The team (**Lydia Alexander**,**Muhammad Sabir**, and **Lev Levine**) has made the decision to collaborate on this project working on and submitting each area as a team.
+The team (**Lydia Alexander**, **Muhammad Sabir**, and **Lev Levine**) has made the decision to collaborate on this project working on and submitting each area as a team.
 
-## Overview
+## Communications Protocol
+
+### Cadence & Tools
+
+The team meets at least 3 times per week: Tuesday, Thursday, and Saturday using the **Discord** Collaboration Software. 
+
+**Github** is being actively used to share the work and manage versions. 
+
+**Slack** is used throught the week to exchange messages.
+
+### Team Core Areas of Responsibility
+
+**Lydia** - Database
+
+**Muhammad** - Github & Vusualization
+
+**Lev** - Machine Learning & App Architecture
+
+# Overview/Outline
 
 ### Selected topic
 
@@ -35,60 +53,91 @@ Top Reasons For Choosing:
 ### Description of data sources
 
   - Yahoo Finance dataset on Kaggle  [https://www.kaggle.com/jerryhans/key-statistics-yahoo-finance-stocks-of-2003-2013](https://www.kaggle.com/jerryhans/key-statistics-yahoo-finance-stocks-of-2003-2013)
+
+  The Yahoo Finance dataset from Kaggle includes key statistics of the S & P 500 ("a market-capitalization-weighted index of the 500 largest publicly traded companies in the U.S.") from 2003 - 2013. [Source: Investopedia] (https://www.investopedia.com/terms/s/sp500.asp)
+
   - Yahoo Finance API [https://www.yahoofinanceapi.com/](https://www.yahoofinanceapi.com/)
+
+  "Yahoo Finance API is a service that provides stock quotes and other financial information for any stock ticker symbol. It is one of the largest source of financial data available on the web, and it is updated continuously throughout the day. Yahoo Finance API covers over 37,000 stocks in more than 50 countries. Yahoo Finance is a media property that provides various financial news and data including stock details, quotes, press releases, financial reports."  [Source: Yahoo Finance API - The Complete Guide](https://blog.api.rakuten.net/api-tutorial-yahoo-finance/#:~:text=Yahoo%20Finance%20API%20is%20a%20reliable%20source%20of,Finance%20API%20can%20be%20accessed%20from%20Rakuten%20RapidAPI.)
+
   - yfinance Library [https://pypi.org/project/yfinance/](https://pypi.org/project/yfinance/)
+
+  The yfinance Libarary data source "is a popular open source library developed as a means to access the financail data available on Yahoo Finance" offering a "range of market data on stocks, bonds, currencies and crytpocurrencies." [yfinance Libarary - A Complete Guide](https://algotrading101.com/learn/yfinance-guide/#:~:text=What%20is%20yfinance%3F%20yfinance%20is%20a%20popular%20open,market%20data%20on%20stocks%2C%20bonds%2C%20currencies%20and%20cryptocurrencies.)
+
 
 ### Questions the App will Answer with the Data
 
   * Based on the data input into the NN model, provide a data-driven buy/sell recommendation to the end user on a selected stock on their interest.
 
-## Communications Protocol
+### Description of Data Exploration
+NEED
 
-### Cadence & Tools
-
-The team meets at least 3 times per week: Tuesday, Thursday, and Saturday using the **Discord** Collaboration Software. 
-
-**Github** is being actively used to share the work and manage versions. 
-
-**Slack** is used throught the week to exchange messages.
-
-### Team Core Areas of Responsibility
-
-**Lydia** - Database
-
-**Muhammad** - Github & Vusualization
-
-**Lev** - Machine Learning & App Architecture
+### Description of the Analysis
+NEED
 
 ## Database
 
-ERD
-  ![](database/Database_ERD_v3.PNG)
+A databased was created using PostgreSQL.
 
-- A database was created using postgreSQL
+![](database/database_flow.png)
 
-    ![](database/provisional_database_v1.PNG)
+**ERD**
 
-- The machine learning module is connected to the database.
+![](database/Database_ERD_v3.png)
+
 
 ## Machine Learning Model
 
+### Description of preliminary data preprocessing
+
+- Dropped columns that did not contribute to the prediction
+- Replaced NaN (null) values with mean values for each stock ticker
+- Removed remaining rows that contained NaN values 
+- Removed rows with outliers beyong 2 standard deviation from the mean
+- Scaled the training data to Mean = 0 and STD = 1 (with Standard Scaler)
+
+### Description of preliminiary feature engineering and preliminary feature selection, including our decision-making process
+NEED
+
+### Description of how data was split into training and testing sets
+NEED
+
+### Explanation of model choice, including limitations and benefits
+NEED
+
+
+
+
 ### Model Overview 
 
-A provisional Deep Learning Regression Model has been developed (see **Yahoo_Finance.ipynb**)
+A provisional Deep Learning Regression Model has been developed (see **LOCAL_SERVER/ML_Model.ipynb**)
 
 Target Variable: **Stock Price** (Price)
 
 Initial Feature Variables: 
 
-- **Price per Earnings** (Trailing P/E) 
-- **Earnings per Share** (Diluted EPS)
-- **Return on Assets** (Return on Assets)
-- **Return on Equity** (Return on Equity)
-- **Price per Earnings** (Forward P/E)
-- **Price/Earnings to growth Ratio** (PEG Ratio)
-- **Enterprise Value/Earning Before Interest and Taxes, Depreciation, and Amortization** (Enterprise Value/EBITDA)
-- **Earnings Growth** (Earnings Growth)
+- DE Ratio                    float64
+- Trailing P/E                float64
+- Price/Sales                 float64
+- Price/Book                  float64
+- Profit Margin               float64
+- Operating Margin            float64
+- Return on Assets            float64
+- Return on Equity            float64
+- Revenue Per Share           float64
+- Forward P/E                 float64
+- PEG Ratio                   float64
+- Enterprise Value/Revenue    float64
+- Enterprise Value/EBITDA     float64
+- Gross Profit                float64
+- Diluted EPS                 float64
+- Earnings Growth             float64
+- Revenue Growth              float64
+- Total Cash Per Share        float64
+- Current Ratio               float64
+- Book Value Per Share        float64
+- Cash Flow                   float64
+- Beta                        float64
 
 The model is using the **3 hidden layers**:
 
@@ -100,25 +149,45 @@ The **SELU** activation function is used on all the **Hidden layers**.
 
 The **RELU** activation function is used on all the **Output layer**. 
 
+Since this is a regression analysis, RELU and SELU activation functions generate adequate results.
+
 **The Neural Network Model:**
 
 ![Model](Resources/model_screen.png)
 
-The initial model is run **50 epochs** to train and is generating **Loss: 14.63**
+The model is run **100 epochs** to train.
 
-### Data preprosessing
 
-- Dropped columns that did not contribute to the prediction
-- Replaced NaN (null) values with mean values for each stock ticker
-- Removed remaining rows that contained NaN values 
-- Removed rows with outliers beyong 2 standard deviation from the mean
-- Scaled the training data to Mean = 0 and STD = 1 (with Standard Scaler)
 
-### Deep Learning Model Optimization Next Steps
 
-- Attempt to cluster the stocks into several categories with unsupervised ML 
-- Develop and fit DL models for each cluster individually 
-- Experienemt with activation functions, number of hidden layers, model feature selection, number of epochs, etc
+
+### Data Transformation
+
+- An unsupervised machine learning model has been applied to the cleaned dataset to cluster the data into groups with similar behavioral patterns. K-Means model has been used and the Elbow Curve built.
+
+![Elbow Curve](Resources/Elbow.png)
+
+Based on the Elbow Curve, **k=6** has been selected. We have assigned a **Cluster Class** to each Stock Ticker in the dataset accordingly.
+
+### Model Training and Saving
+
+For each Cluster, a unique Deep Learning Model has been trained based on the Cluster data subset. The Models for each Cluster have been saved (total of 6). The Scalers for each Cluster have been saved (total of 6).
+
+For new stock tickers that are not part of the overall dataset and may be potentially entered by the App users, a 7th model has been trained. The 7th model is based on the overall dateset (without clustering). Both, the model and scaler have also been saved.
+
+### Model Evaluation
+
+Adjusted R-Square has been used to evaluate the each Model accuracy. 
+
+The R-Square results are below.
+
+1. Model 0: 0.34
+2. Model 1: 0.23
+3. Model 2: 0.71
+4. Model 3: 0.99
+5. Model 4: 0.37
+6. Model 5: 0.62
+7. Model 6: 0.33
 
 ### Overall User Experience
 
@@ -127,21 +196,13 @@ The initial model is run **50 epochs** to train and is generating **Loss: 14.63*
 1. Enter stock ticker
 2. The backend will pull the most recent feature data and target variable data from Yahoo Finance
 3. The DL Model will calculate the predicted stock price base on the most current feature data
-4. The predicted and current stock price will be displayed for the user
+4. The predicted and current stock price are displayed for the user
 5. If predicted stock price > current stock price, a BUY recommendation generated and vise versa
 
-**The working prototype User Interface:**
+**The working Prototype 2.0 User Interface (localhost deployment):**
 
-![App](Resources/stockoptimizer_screen.png)
+![App](Resources/screen2.png)
 
-#### B. Discover investment opportunity stocks (Optional Feature)
-
-1. Click the "Analyze the Market" button
-2. Pull the current feature data and target variable data for all the tickers in the array (>300)
-3. Run the DL model to predict prices for each stock
-4. Display predicted and current prices sorted in the descending order of the investment opportunity
-5. Provide a recommendation on which stocks to invest
-
-### Prototype App Deployment on HEROKU
+### Prototype 1.0 App Deployment on HEROKU (to be updated)
 
 [https://stockoptimizer.herokuapp.com/](https://stockoptimizer.herokuapp.com/)
